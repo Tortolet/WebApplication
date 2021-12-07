@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Чатик v.0.2 - Чат</title>
+</head>
+<body>
+<h1>Чат</h1>
+<div id="header"></div>
+<div id="inputForm">
+    <input type="text" id="message" />
+    <input type="button" id="sendBtn" value="Отправить" />
+</div>
+<div id="chatroom"></div>
+<script>$( "#chatroom" ).load( "index.html" )</script>
+<script src="index.html"></script>
+<script src="js/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script>
+    const hubConnection = new signalR.HubConnectionBuilder()
+        .withUrl("/chat")
+        .build();
+
+    var name = localStorage.getItem("name");
+    document.getElementById("header").innerHTML = "<h3>Добро пожаловать, " + name + "</h3>";
+    hubConnection.on("Send", function (message,name) {
+        let nameElem = document.createElement("b")
+        nameElem.appendChild(document.createTextNode(name + ": "));
+
+        let elem = document.createElement("p");
+        elem.appendChild(nameElem);
+        elem.appendChild(document.createTextNode(message));
+
+        let firstElem = document.getElementById("chatroom").firstChild;
+        document.getElementById("chatroom").insertBefore(elem, firstElem);
+
+    });
+
+    document.getElementById("sendBtn").addEventListener("click", function (e) {
+        let message = document.getElementById("message").value;
+        hubConnection.invoke("Send", message, name);
+    });
+
+    document.getElementById("message").addEventListener("keydown", function (e){
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13){
+            let message = document.getElementById("message").value;
+            hubConnection.invoke("Send", message, name);
+            get();
+        }
+    }, false);
+    hubConnection.start();
+</script>
+<footer>
+    <p>
+        by tort.
+    </p>
+</footer>
+</body>
+</html>
