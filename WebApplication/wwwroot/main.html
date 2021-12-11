@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Чатик v.0.2 - Чат</title>
+    <title>Чатик v.0.3 - Чат</title>
 </head>
 <body>
 <h1>Чат</h1>
@@ -16,7 +16,7 @@
 <script src="index.html"></script>
 <script src="js/microsoft/signalr/dist/browser/signalr.min.js"></script>
 <script>
-    const hubConnection = new signalR.HubConnectionBuilder()
+    const hubConnection = new signalR.HubConnectionBuilder() 
         .withUrl("/chat")
         .build();
 

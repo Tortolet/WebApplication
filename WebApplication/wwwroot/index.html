@@ -2,29 +2,33 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Чатик v.0.2 - Логин</title>
+    <title>Чатик v.0.3 - Логин</title>
 </head>
 <body>
 <h1>Логин</h1>
 
 <div id="login">
-    Введите логин <br />
-    <input id="name" type="text" />
-<!--    <form action="main.html">-->
-<!--    <button id="loginBtn">Войти</button>-->
-<!--    </form>-->
+    Login <br />
+    <input id="name" type="text" /> <br /> <br />
+    Password <br />
+    <input id="password" type="password" /> <br />
+    <input type="checkbox" onclick="myFunction()" />Показать пароль <br /> <br />
     <input id="loginBtn" type="button" value="Войти" onclick="location.href='main.html'" />
 </div><br />
 
 <div id="header"></div><br />
-
-<!--<div id="inputForm">-->
-<!--    <input type="text" id="message" />-->
-<!--    <input type="button" id="sendBtn" value="Отправить" />-->
-<!--</div>-->
 <div id="chatroom"></div>
 <script src="js/microsoft/signalr/dist/browser/signalr.min.js"></script>
 <script>
+    function myFunction() {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+    
     const hubConnection = new signalR.HubConnectionBuilder()
         .withUrl("/chat")
         .build();
@@ -46,6 +50,16 @@
             document.location.href="main.html";
             get();
             
+        }
+    }, false);
+
+    document.getElementById("password").addEventListener("keydown", function (e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            name = document.getElementById("name").value;
+            localStorage.setItem("name", document.getElementById("name").value);
+            document.location.href = "main.html";
+            get();
         }
     }, false);
     
