@@ -13,7 +13,7 @@
     Password <br />
     <input id="password" type="password" /> <br />
     <input type="checkbox" onclick="myFunction()" />Показать пароль <br /> <br />
-    <input id="loginBtn" type="button" value="Войти" onclick="location.href='main.html'" />
+    <input id="loginBtn" type="button" value="Войти" />
 </div><br />
 
 <div id="header"></div><br />
@@ -34,11 +34,24 @@
         .build();
     
     var name = '';
+    let password;
     
     document.getElementById("loginBtn").addEventListener("click",function (e){
         name = document.getElementById("name").value;
+        password = document.getElementById("password").value;
         localStorage.setItem("name",document.getElementById("name").value);
+        hubConnection.invoke("Check", name, password);
         //document.getElementById("header").innerHTML = "<h3>Добро пожаловать " + name + "</h3>"
+    });
+    
+    hubConnection.on("Check", function (result){
+       if (result){
+           sessionStorage.setItem("name", document.getElementById("name").value);
+           location.href = "main.html";
+       } 
+       else {
+           document.getElementById("header").innerHTML = "<h3>Неправилбный логин или пароль</h3>"
+       }
     });
 
     document.getElementById("name").addEventListener("keydown", function (e){

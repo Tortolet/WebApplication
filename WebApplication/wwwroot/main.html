@@ -19,7 +19,7 @@
     const hubConnection = new signalR.HubConnectionBuilder() 
         .withUrl("/chat")
         .build();
-
+    
     var name = localStorage.getItem("name");
     document.getElementById("header").innerHTML = "<h3>Добро пожаловать, " + name + "</h3>";
     hubConnection.on("Send", function (message,name) {
