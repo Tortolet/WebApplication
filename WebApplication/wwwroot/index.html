@@ -58,9 +58,11 @@
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13){
             name = document.getElementById("name").value;
+            password = document.getElementById("password").value;
             localStorage.setItem("name",document.getElementById("name").value);
+            hubConnection.invoke("Check", name, password);
             //document.getElementById("header").innerHTML = "<h3>Добро пожаловать " + name + "</h3>"
-            document.location.href="main.html";
+            //document.location.href="main.html";
             get();
             
         }
@@ -70,8 +72,10 @@
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13) {
             name = document.getElementById("name").value;
+            password = document.getElementById("password").value;
             localStorage.setItem("name", document.getElementById("name").value);
-            document.location.href = "main.html";
+            hubConnection.invoke("Check", name, password);
+            //document.location.href = "main.html";
             get();
         }
     }, false);
