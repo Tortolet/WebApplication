@@ -35,6 +35,7 @@
     
     var name = '';
     let password;
+    let username;
     
     document.getElementById("loginBtn").addEventListener("click",function (e){
         name = document.getElementById("name").value;
@@ -43,6 +44,10 @@
         hubConnection.invoke("Check", name, password);
         //document.getElementById("header").innerHTML = "<h3>Добро пожаловать " + name + "</h3>"
     });
+    
+    hubConnection.on("Check", function (res){
+        localStorage.setItem("username", res);
+    })
     
     hubConnection.on("Check", function (result){
        if (result){

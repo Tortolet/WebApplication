@@ -20,7 +20,7 @@
         .withUrl("/chat")
         .build();
     
-    var name = localStorage.getItem("name");
+    var name = localStorage.getItem("username");
     document.getElementById("header").innerHTML = "<h3>Добро пожаловать, " + name + "</h3>";
     hubConnection.on("Send", function (message,name) {
         let nameElem = document.createElement("b")
